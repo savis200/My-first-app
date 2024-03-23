@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Image Editor</title>
+  <style>
+    #canvas {
+      border: 1px solid black;
+    }
+  </style>
+</head>
+<body>
+  <input type="file" id="fileInput">
+  <canvas id="canvas"></canvas>
+  <button onclick="resizeImage()">Resize Image</button>
+
+  <script>
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+    let image;
+
+    // Load image when file input changes
+    document.getElementById('fileInput').addEventListener('change', function(event) {
+      const file = event.target.files[0];
+      const reader = new FileReader();
+
+      reader.onload = function(e) {
+        const img = new Image();
+        img.onload = function() {
+          canvas.width = img.width;
+          canvas.height = img.height;
+          ctx.drawImage(img, 0, 0);
+          image = img;
+        };
+        img.src = e.target.result;
+      };
+
+      reader.readAsDataURL(file);
+    });
+
+    // Resize image
+    function resizeImage() {
+      const width = prompt('Enter new width:');
+      const height = prompt('Enter new height:');
+      canvas.width = width;
+      canvas.height = height;
+      ctx.drawImage(image, 0, 0, width, height);
+    }
+  </script>
+</body>
+</html>
