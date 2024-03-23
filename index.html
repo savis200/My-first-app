@@ -1,52 +1,99 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Image Editor</title>
-  <style>
-    #canvas {
-      border: 1px solid black;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Upload Form</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: #333;
+            text-align: center;
+        }
+
+        form {
+            padding: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input[type="email"],
+        input[type="file"],
+        button {
+            width: calc(100% - 22px);
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+
+        button {
+            background-color: #007bff;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        #image {
+            margin-bottom: 20px;
+        }
+
+        #progress {
+            margin-top: 20px;
+            font-weight: bold;
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
-  <input type="file" id="fileInput">
-  <canvas id="canvas"></canvas>
-  <button onclick="resizeImage()">Resize Image</button>
 
-  <script>
-    const canvas = document.getElementById('canvas');
-    const ctx = canvas.getContext('2d');
-    let image;
+    <div class="container">
+        <h2>Image Upload Form</h2>
 
-    // Load image when file input changes
-    document.getElementById('fileInput').addEventListener('change', function(event) {
-      const file = event.target.files[0];
-      const reader = new FileReader();
+        <form id="imageUploadForm">
+            <div style="padding: 10px;">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
 
-      reader.onload = function(e) {
-        const img = new Image();
-        img.onload = function() {
-          canvas.width = img.width;
-          canvas.height = img.height;
-          ctx.drawImage(img, 0, 0);
-          image = img;
-        };
-        img.src = e.target.result;
-      };
+            <div style="padding: 10px;">
+                <label for="image">Select Image:</label>
+                <input type="file" id="image" name="image" accept="image/*" multiple>
+            </div>
+            
+            <button type="button" onclick="uploadImages()">Upload Images</button>
+        </form>
 
-      reader.readAsDataURL(file);
-    });
+        <div id="progress"></div>
+    </div>
 
-    // Resize image
-    function resizeImage() {
-      const width = prompt('Enter new width:');
-      const height = prompt('Enter new height:');
-      canvas.width = width;
-      canvas.height = height;
-      ctx.drawImage(image, 0, 0, width, height);
-    }
-  </script>
+    <script src="https://www.gstatic.com/firebasejs/10.6.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.6.2/firebase-storage.js"></script>
+
+    <script>
+        // JavaScript code remains the same
+    </script>
+
 </body>
 </html>
